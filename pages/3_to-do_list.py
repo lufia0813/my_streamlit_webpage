@@ -42,10 +42,29 @@ for index, task in enumerate(st.session_state.tasks):
 	# 每一行都切成兩欄：左邊放字，右邊放按鈕
 	c1, c2 = st.columns([5, 1])
 
+	# show num+task
 	with c1:
-		# show num+task
-		st.info(f"{index+1}. {task}", icon="📌")
+		if index % 2 == 0: # 奇數行顏色淺藍
+			bg_color = "#CCEEFF"
+		else: # 偶數行顏色淺紫
+			bg_color = "#E8CCFF"
+		st.markdown(
+			f"""
+			<div style="
+				background-color:{bg_color}; # 會根據是奇數還是偶數來填入背景顏色
+				padding: 15px; # 內距
+				border-radius: 10px; # 圓角
+				margin-bottom: 10px; # 在框的下面，空出 10 px 的距離。
+				color: #333333;
+			">
+				📌 <b>{index + 1}.</b> {task} # <b> ... </b>是粗體
+			</div>
+			""",
+			unsafe_allow_html = True # 允許在python中寫一點html
+		)
+		
 	with c2:
+		st.write("")
 		# del button
 		if st.button("❌", key = f"delete_{index}"): 
 			# key=f"delete_{index}" 讓每個按鈕的 ID 會變成 delete_0, delete_1...
