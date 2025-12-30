@@ -63,14 +63,14 @@ for index, task in enumerate(st.session_state.tasks):
 			unsafe_allow_html = True
 		)
 
-	'''
+"""
 		background-color:{bg_color}; # 會根據是奇數還是偶數來填入背景顏色
 		padding: 15px; # 內距
 		border-radius: 10px; # 圓角
 		margin-bottom: 10px; # 在框的下面，空出 10 px 的距離。
 		📌 <b>{index + 1}.</b> {task} # <b> ... </b>是粗體
 		unsafe_allow_html = True # 允許在python中寫一點html
-	'''
+"""
 		
 	with c2:
 		st.write("")
