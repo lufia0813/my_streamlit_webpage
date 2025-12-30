@@ -13,22 +13,25 @@ def add_task():
 		st.session_state.tasks.append(task_content) # 1. 加進清單
 		st.session_state.new_task_input = ""        # 2. 把輸入框歸零！
 	
-# 輸入框與按鈕
-col1, col2 = st.columns([4, 1]) # 切版：輸入框寬一點，按鈕窄一點
+# 新增區塊改用st.form
+with st.form(key = "add_task_form", clear_on_submit = True):
+	# clear_on_submit = True 會自動清空輸入框
+	col1, col2 = st.columns([4, 1]) # 切版：輸入框寬一點，按鈕窄一點
 
 with col1:
-	# new_task = st.text_input("想做什麼？", placeholder="例如：寫完 Python 作業")
-	st.text_input("今天想做什麼？", key="new_task_input", on_change=add_task)
-	# key="new_task_input" -> 幫這個輸入框取個 ID，讓小幫手找得到它
-	# on_change=add_task   -> 當使用者在框框按 enter 時，也呼叫小幫手
+	new_task = st.text_input("今天想做什麼？")
 
 with col2:
 	# 為了排版好看，加個空行讓按鈕往下移對齊
 	st.write("") 
 	st.write("")
-	# add_btn = st.button("新增")
-	st.button("新增", on_click=add_task) # on_click=add_task -> 當按鈕被按下去時，呼叫小幫手
+	# 改用st.form
+	submit_btn = st.form_submit_button("新增")
 
+if submit_btn and new_task: # 按鈕被按下+有輸入文字 才執行
+	st.session_state.tasks.append(new_task)
+	st.rerun() # 馬上更新清單
+	
 # show list rn
 st.divider() # 分隔線
 st.subheader("待辦事項：")
@@ -41,7 +44,7 @@ for index, task in enumerate(st.session_state.tasks):
 
 	with c1:
 		# show num+task
-		st.write(f"{index+1}. {task}")
+		st.write(f"{index+1}. {task}", icon="📌")
 	with c2:
 		# del button
 		if st.button("❌", key = f"delete_{index}"): 
