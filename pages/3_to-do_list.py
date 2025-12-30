@@ -44,7 +44,7 @@ for index, task in enumerate(st.session_state.tasks):
 
 	with c1:
 		# show num+task
-		st.write(f"{index+1}. {task}", icon="📌")
+		st.info(f"{index+1}. {task}", icon="📌")
 	with c2:
 		# del button
 		if st.button("❌", key = f"delete_{index}"): 
